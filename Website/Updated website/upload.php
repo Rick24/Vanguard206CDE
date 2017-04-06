@@ -10,7 +10,7 @@ if(isset($_POST['submit']) && isset($_FILES['filedata']) && !empty($_FILES['file
                     $f = file("/var/www/vhosts/vanguardanalysis.com/web/data/pipal-output.txt");
                     foreach($f as $k => &$l) {
                         $class = '';
-                        $l = trim($l);
+                        $l = trim(htmlentities($l));
                         //echo "$k: l: $l\n";
                         if(strpos($l,"|") !== FALSE) {
                             $n .= "<div class=\"p\">$l</div>\n";
@@ -22,8 +22,14 @@ if(isset($_POST['submit']) && isset($_FILES['filedata']) && !empty($_FILES['file
                         } else $n .= "<div>$l</div>\n";
                     }
 
-		    echo "<div style=\"font-size: 18px; font-weight: bold;\">Report Generated!</div>";
-                    echo "$n\n";
+		    //echo "<div style=\"font-size: 18px; font-weight: bold;\">Report Generated!</div>";
+                    //echo "$n\n";
+                    $n = '<html><head><link rel="stylesheet" href="http://vanguardanalysis.com/default.css" /></head><body>' . $n . '</body></html>';
+                    header("Content-Type: text/html");
+                    header('Content-Disposition: attachment; filename="report.html"');
+                    header('Content-Length: ' . strlen($n));
+                    echo $n;
+                    exit;
                 }
             }
         }
@@ -80,6 +86,7 @@ unlink("/var/www/vhosts/vanguardanalysis.com/web/data/pipal-output.txt");
 	    <input type="file" name="filedata" id="filedata">
 	    <input type="submit" value="Upload File" name="submit">
 	</form>
+          <p>Your report will be available for download once the analysis has completed, please stand by...</p>
 </div>
 </div>
 </div>
