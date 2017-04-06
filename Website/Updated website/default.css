@@ -145,9 +145,17 @@ a:hover {
 	text-decoration: underline;
 }
 
+#Aboutus {
+	position: center;
+	font-style: arial;
+}
 
+.AboutUs {
+	text-align: center;
+	font-family: arial;
+	font-size: 15px;
 
-
+}
 
 /** FOOTER */
 
